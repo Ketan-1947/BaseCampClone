@@ -1,0 +1,16 @@
+.puzzle-box{
+    width:800px;
+    height: 800px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+img{
+    width: 200px;
+}
+.piece-15{
+    visibility: hidden;
+}
+.homepage{
+    display: flex;
+    justify-content: space-around;
+}
