@@ -52,7 +52,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 
 .container{
     display: flex;

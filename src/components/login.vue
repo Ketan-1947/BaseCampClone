@@ -1,5 +1,10 @@
 <script setup>
     import {reactive} from 'vue'
+    import {useUserData} from '../../store.js'
+
+    const userData = useUserData();
+
+
     const user = reactive({
         id: "",
         pass: ""
@@ -15,7 +20,8 @@
         console.log(verified)
         if(verified.status === 200){
             alert('login sucessfull')
-            window.location.hash = '/';
+            userData.setUser(user.id)
+            window.location.hash = '/messages';
         }
         else if(verified.status === 401){
             alert('invalid credentials')
@@ -47,7 +53,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 
 .container{
     display: flex;
@@ -72,3 +78,4 @@
 
 
 </style>
+
