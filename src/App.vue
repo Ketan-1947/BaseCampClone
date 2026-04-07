@@ -1,52 +1,63 @@
 <script setup lang="ts">
-	import messages from "./components/messages.vue"
-	import login from "./components/login.vue"
-	import signup from "./components/signup.vue"
-	import message from "./components/message.vue"
-	import create_message from "./components/create_message.vue"
-	import {ref, computed, provide} from "vue"
-	import type {Component} from "vue"
+import{useRouter} from 'vue-router'
+import { onMounted, useAttrs } from 'vue'
 
-	type Route = Record<string, Component>
+const router = useRouter()
 
-	const routes: Route = {
-		"/messages": messages,
-		"/message": message,
-		"/login": login,
-		"/signup": signup,
-		"/create-message": create_message
-	}
-
-	if (!window.location.hash) {
-	window.location.hash = "/login"
-	}
-
-	const currentPath = ref(window.location.hash)
-
-	window.addEventListener("hashchange", () => {
-		currentPath.value = window.location.hash	
-	})
-
-	const currentView = computed(() => {
-
-		let str = currentPath.value.split("/")
-		console.log(str)
-		return routes["/"+str[1] || '#/']
-	})
+router.beforeEach((to, from, next) => {
+    if (to.path !== '/login' && !localStorage.user_id) {
+        next('/login')
+    } else {
+        next()
+    }
+    // console.log(userData.user_id)
+})
 </script>
 
 <template>
-
-		<component :is = "currentView"/>
-
+    <RouterView />
 </template>
 
 <style>
- body{
-        background-color: #0b151b;
-        color: white;
-        box-sizing: border-box;
-		margin:0;
+body {
+    background-color: #0b151b;
+    color: white;
+    box-sizing: border-box;
+    margin: 0;
 
-    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(11, 21, 27, 0.7);
+    position: fixed;
+    width: 99%;
+}
+
+.navigation-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.nav-text {
+    display: flex;
+    color: white;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+}
+
+.nav-icon {
+    height: 20px;
+}
+
+.user-logo {
+    border-radius: 100%;
+    width: fit-content;
+    padding: 10px;
+    background-color: orange;
+}
 </style>

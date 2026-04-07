@@ -1,10 +1,11 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import {useUserData} from '../../store.js'
+import { ref, reactive, onMounted, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
+import navBar from './header.vue'
 
-const path = window.location.hash
-const message_id = path.split('/')[2]
-const userData = useUserData()
+const route = useRoute()
+const message_id = route.params.id
+// if(userData.user_id == null) window.location.hash = '/login' 
 
 const message_data = ref()
 let message = ref()
@@ -12,9 +13,18 @@ let comments = ref()
 const loaded = ref(false);
 const write_comment = ref(false);
 const new_comment = reactive({
-    user:userData.user_id,
-    comment:""
+    user: localStorage.user_id,
+    comment: ""
 })
+
+async function load_comments() {
+    let res = await fetch("http://localhost:3000/message/" + message_id)
+    message_data.value = await res.json()
+    comments.value = message_data.value["comments"]
+    write_comment.value = false
+    new_comment.comment = ""
+}
+
 
 onMounted(async () => {
     let res = await fetch("http://localhost:3000/message/" + message_id)
@@ -24,24 +34,36 @@ onMounted(async () => {
     loaded.value = true
 })
 
-async function addComment(){
-    let res = await fetch("http://localhost:3000/comment/create/"+message_id, {
-        method:"POST",
-        headers:{'Content-Type': 'application/json'},
-        body:JSON.stringify(new_comment)
+async function addComment() {
+    let res = await fetch("http://localhost:3000/comment/create/" + message_id, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(new_comment)
     })
-    if(res.status == 200){
+    if (res.status == 200) {
         alert('comment added')
-        let res = await fetch("http://localhost:3000/message/" + message_id)
-        message_data.value = await res.json()
-        comments.value = message_data.value["comments"]
-    }    
+        load_comments()
+
+    }
     else alert("fuckkkkk")
-} 
+}
+
+async function deleteComment(m_id, c_id) {
+    let res = await fetch("http://localhost:3000/comment/delete/" + m_id + "/" + c_id, {
+        method: "delete"
+    })
+    if (res.status != 200) {
+        alert("failed to delete the comment")
+    }
+    else {
+        load_comments()
+    }
+}
 
 </script>
 
 <template>
+    <navBar />
     <div class="container">
         <div class="message-body" v-if="loaded">
             <div class="header">
@@ -57,8 +79,15 @@ async function addComment(){
                 {{ message.message }}
             </div>
             <div class="comments">
-                <div class="comment" v-for="comment in comments">
-                    {{ comment }}
+                <div class="comment-box" v-for="(comment, id) in comments">
+                    <div class="comment-time">{{ comment.time }}</div>
+                    <img src="" alt="pf" class="comment-pfp">
+                    <div class="comment">{{ comment.comment }}</div>
+                    <div class="options">
+                        <!-- {{ id }} -->
+                        <div class="delete" @click.prevent.stop="() => { deleteComment(message_id, id) }">***</div>
+                        <div class="rocket">rock</div>
+                    </div>
                 </div>
             </div>
 
@@ -90,7 +119,7 @@ async function addComment(){
                 </div>
                 <textarea name="new-message" id="new-message" class="message text-area" placeholder="write away"
                     v-model="new_comment.comment"></textarea>
-                <button class="submit-comment" @click= "addComment">Add this Commnet</button>
+                <button class="submit-comment" @click="addComment">Add this Commnet</button>
             </div>
         </div>
     </div>
@@ -109,12 +138,7 @@ async function addComment(){
         flex-direction: column; */
     background-color: rgb(35, 42, 42);
     margin: 20px 100px;
-}
-
-.header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    min-width: 960px;
 }
 
 .user {
@@ -135,24 +159,38 @@ async function addComment(){
 .add-comment:hover {
     cursor: pointer;
 }
+
 /* .option{
     display: flex;
 } */
-.edit{
+.edit {
     display: flex;
 }
-.text-modifier{
+
+.text-modifier {
     display: flex;
     justify-content: space-between;
 }
-.write-comment-box{
-    padding:100px;
+
+.write-comment-box {
+    padding: 100px;
 }
-.text-area{
+
+.text-area {
     resize: none;
     width: 960px;
     height: 200px;
-    background-color:  rgb(35, 42, 42);
+    background-color: rgb(35, 42, 42);
     color: white;
+}
+
+.comment {
+    /* width: 500px; */
+}
+
+.comment-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 100px;
 }
 </style>

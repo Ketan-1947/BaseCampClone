@@ -32,6 +32,7 @@
 </script>
 <template>
     <div class = 'container'>
+        <h1 class = "title">SIGN UP</h1>
         <form @submit.prevent = 'createUser' class = 'login'>
             <label>SIGN UP</label>
             <span>
@@ -53,7 +54,9 @@
 </template>
 
 <style scoped>
-
+.title{
+    color: black;
+}
 .container{
     display: flex;
     flex-direction: column;
