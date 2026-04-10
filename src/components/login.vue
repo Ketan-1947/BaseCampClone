@@ -33,24 +33,25 @@ async function verifyUser() {
 </script>
 <template>
     <div class='container'>
-        <h1 class='title'> LOG IN</h1>
+        <img src="..\assets\logo.svg" alt="logo" class="logo">
         <form @submit.prevent='verifyUser' class='login'>
-            <label>Log IN</label>
-            <span>
+            <h3 class="login-title">Log in to BaseCamp</h3>
+
+            <span class="input-field">
                 <label for="userName">User Name</label>
-                <input type="text" id="userName" name="userName" placeholder="User Name" v-model="user.id">
+                <input type="text" class="text-field" id="userName" name="userName" placeholder="User Name"
+                    v-model="user.id">
             </span>
-            <span>
+            <span class="input-field">
                 <label for="pass">Password</label>
-                <input type="password" id="pass" name="password" placeholder="Enter Password" v-model="user.pass">
+                <input type="password" class="text-field" id="pass" name="password" placeholder="Enter Password"
+                    v-model="user.pass">
             </span>
 
             <button>submit</button>
         </form>
-        <span>
-            <a href="#/login">Log in</a> |
-            <a href="#/signup">Sign up</a>
-        </span>
+        <a href="/signup">Sign up for free</a>
+
     </div>
     <!-- {{ "usreData: " + localstorage.user_id }} -->
 </template>
@@ -64,20 +65,46 @@ async function verifyUser() {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: 97vh;
     background-color: #fefbf8;
+    padding-top: 60px;
+}
+
+.logo {
+    width: 90px;
+    margin-bottom: 10px;
 }
 
 .login {
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    width: 200px;
-    border: 2px inset black;
-    padding: 50px;
-    height: 200px;
+    width: 300px;
+    padding: 10px 40px 50px;
+    margin-bottom: 30px;
+    border-radius: 10px;
     background-color: white;
-    box-shadow: 3px 2px rgb(167, 167, 167);
+    box-shadow: 5px 5px 10px rgb(227, 227, 227), -5px -5px 10px rgb(227, 227, 227);
+    gap:10px
+}
+
+.login-title {
+    color: black;
+}
+
+.input-field {
+    display: flex;
+    ;
+    flex-direction: column;
+    align-self: flex-start;
+    color: black;
+    padding-bottom: 20px;
+    font-weight: 600;
+}
+
+.text-field {
+    width: 300px;
+    height: 40px;
 }
 </style>

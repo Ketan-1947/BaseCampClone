@@ -1,17 +1,24 @@
 <script setup>
-import { reactive } from 'vue'
-import {useRouter} from 'vue-router'
+import { ref, reactive, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import navBar from './header.vue'
+import board from './board.vue'
 
 const router = useRouter()
-
 const metaData = reactive({
     user: localStorage.user_id,
     title: "",
     category: "",
-    message: ""
+    message: "",
+    notify:""
 })
 
+const title_rows = ref(1);
+function calc_rows(lim) {
+    let len = metaData.title.length;
+    console.log(len)
+    title_rows.value = len / lim + 1;
+}
 async function createMessage() {
     let response = await fetch('http://localhost:3000/message/create', {
         method: "POST",
@@ -31,152 +38,238 @@ async function createMessage() {
 </script>
 <template>
     <navBar />
-    <br>
-    <main class="main">
-        <div class="board">
-            <div class="board-body">
-                <select class="category" v-model="metaData.category">
-                    <option value="" disabled selected hidden>Pick a category</option>
-                    <option value="tech">Technology</option>
-                    <option value="design">Design</option>
-                    <option value="business">Business</option>
-                </select>
-                <textarea name="message-title" id="message-title" class="title text-area" placeholder="Title"
-                    v-model="metaData.title"></textarea>
-                <div class="text-modifier">
-                    <div class="option">
-                        <span>B </span>
-                        <span>I </span>
-                        <span>- </span>
-                        <span>link </span>
-                        <span>clr </span>
-                        <span>head </span>
-                        <span>quote </span>
-                        <span>dvd </span>
-                        <span>code </span>
-                        <span>ul </span>
-                        <span>ol </span>
-                        <span>file </span>
-                    </div>
-                    <div class="edit">
-                        <span>undo</span>
-                        <span>redo</span>
-                    </div>
-                </div>
-                <textarea name="new-message" id="new-message" class="message text-area" placeholder="write away"
-                    v-model="metaData.message"></textarea>
+    <board>
+    <div class="board-header">
+        <select class="category" v-model="metaData.category">
+            <option value="" disabled selected hidden>Pick a category(optional)</option>
+            <option value="💡 Pitch">💡 Pitch</option>
+            <option value="📢 Announcement">📢 Announcement</option>
+            <option value="👋 Question">👋 Question</option>
+        </select>
+        <textarea name="new-message" id="new-message" class="title text-area" placeholder="Type a title..."
+        :rows="title_rows" v-model="metaData.title" @input="()=>{calc_rows(27)}"></textarea>
+        <div class="toolbar">
+            <div class="menu">
+                <button class="toolbar-btn icon-bold">B</button>
+                <button class="toolbar-btn icon-italic">I</button>
+                <button class="toolbar-btn icon-strikethrough">S</button>
+                <button class="toolbar-btn icon-link"></button>
+                <button class="toolbar-btn icon-highlight"></button>
+                <button class="toolbar-btn icon-text"></button>
+                <button class="toolbar-btn icon-quote"></button>
+                <button class="toolbar-btn icon-align"></button>
+                <button class="toolbar-btn icon-code"></button>
+                <button class="toolbar-btn icon-ul"></button>
+                <button class="toolbar-btn icon-ol"></button>
+                <button class="toolbar-btn icon-attach"></button>
             </div>
-
-            <div class="footer">
-                <form class="notify">
-                    <input type="radio" value="1" id="all" name="notifyTo">
-                    <label for="all"> 1</label>
-                    <input type="radio" value="2" id="some" name="notifyTo">
-                    <label for="some"> 2</label>
-                    <input type="radio" value="3" id="none" name="notifyTo">
-                    <label for="none"> 3</label>
-                </form>
-                <div class="buttons">
-                    <button class="draft" @click.prevent.stop="draftMessage">draft</button>
-                    <button class="save" @click.prevent.stop="createMessage">save</button>
-                </div>
+            <div class="undo-redo">
+                <button class="toolbar-btn icon-undo"></button>
+                <button class="toolbar-btn icon-redo"></button>
             </div>
         </div>
-    </main>
-    {{ metaData }}
+        
+        <textarea name="new-message" id="new-message" class="message text-area" placeholder="Write away..."
+        rows="15" v-model="metaData.message" @input="()=>{calc_rows(27)}"></textarea>
+    </div>
+    <div class="footer">
+        <p class="notify">When i post this, notify...</p>
+        <form class="notify-option">
+            <input type="radio" value="Notified all" id="all" name="notifyTo" v-model="metaData.notify">
+            <label for="all"> Notify all who can see this project</label>
+            <input type="radio" value="Notified some" id="some" name="notifyTo" v-model="metaData.notify">
+            <label for="some"> Only notify these people <a href=""> change...</a></label>
+            <input type="radio" value="Notified none" id="none" name="notifyTo" v-model="metaData.notify">
+            <label for="none"> No one</label>
+        </form>
+        <div class="buttons">
+            <button class="draft" @click.prevent.stop="draftMessage">Save as draft</button>
+            <button class="save" @click.prevent.stop="createMessage">Post this message</button>
+        </div>
+    </div>
+    </board>
 </template>
 <style scoped>
-.header {
-    display: flex;
-    justify-content: space-between;
-    background-color: rgb(11, 21, 27, 0.7);
-    position: fixed;
-    width: 99%;
-}
 
-.main {
-    display: flex;
-    justify-content: center;
-    margin: 0px 20px;
-    padding: 10px;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-.board {
-    display: flex;
-    flex-direction: column;
-    background-color: #1b2930;
-    border-radius: 15px;
-}
-
-.board-body {
-    display: flex;
-    flex-direction: column;
-    min-width: 960px;
-    padding: 0 100px;
-}
-
-.text-area {
-    /* width: 100%; */
-    background-color: #1b2930;
-    border: 0px;
-    resize: none;
-    overflow: hidden;
-    color: white;
-}
-
-.title {
-    font-size: 40px;
-    min-height: 100px;
-}
-
-.message {
-    font-size: 20px;
-    min-height: 600px;
-}
-
 .category {
-    width: fit-content;
-    border: 2px solid;
-    border-radius: 20px;
-    padding: 5px 10px;
-    margin: 10px 0;
-    color: #ffffff;
     background-color: #1b2930;
-}
-
-.text-area:focus {
-    outline: none;
+    border: 1px solid white;
+    border-radius: 30px;
+    padding: 5px 5px;
+    align-self: start;
     color: white;
+    margin: 30px 10% 20px;
 }
 
-.text-modifier {
+/* #################################################################### */
+.toolbar {
+    background: #1b2930;
+    padding: 8px 12px;
     display: flex;
-    width: 100%;
-    padding: 10px 0;
+    align-items: center;
     justify-content: space-between;
-    background-color: #1b2930;
-    border-top: 1px solid #313e44;
-    border-bottom: 1px solid #313e44;
-}
-
-.text-modifier .edit {
-    display: flex;
-    gap: 10px;
-}
-
-.footer {
     width: 100%;
-    background-color: #27353c;
+    padding: 0 10%;
+    border-bottom: 1px solid rgb(104, 104, 104);
+    border-top: 1px solid rgb(101, 101, 101);
 }
 
-.draft {
-    height: 50px;
-    width: 100px;
+.menu {
+    display: flex;
 }
 
-.save {
-    height: 50px;
-    width: 100px;
+.toolbar-btn {
+    background: transparent;
+    border: none;
+    color: #e2e8f0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+}
+
+.toolbar-btn:hover {
+    background: #4a5568;
+}
+
+.toolbar-btn:active {
+    background: #3d4758;
+}
+
+/* Icon styles */
+.icon-bold {
+    font-weight: bold;
+}
+
+.icon-italic {
+    font-style: italic;
+}
+
+.icon-strikethrough {
+    text-decoration: line-through;
+}
+
+.icon-link::before {
+    content: "🔗";
+    font-size: 14px;
+}
+
+.icon-highlight::before {
+    content: "🖍";
+    font-size: 14px;
+}
+
+.icon-text::before {
+    content: "T";
+    font-weight: bold;
+}
+
+.icon-quote::before {
+    content: "\"\"";
+    font-size: 14px;
+}
+
+.icon-align::before {
+    content: "≡";
+}
+
+.icon-code::before {
+    content: "<>";
+    font-size: 13px;
+}
+
+.icon-ul::before {
+    content: "☰";
+}
+
+.icon-ol::before {
+    content: "≡";
+}
+
+.icon-attach::before {
+    content: "📎";
+    font-size: 14px;
+}
+
+.icon-undo::before {
+    content: "↶";
+    font-size: 18px;
+}
+
+.icon-redo::before {
+    content: "↷";
+    font-size: 18px;
+}
+
+.undo-redo {
+    display: flex;
+}
+
+/* ############################################################## */
+.text-area{
+    background-color: #1b2930;
+    border: none;
+    outline: none;
+    resize: none;
+    width: 100%;
+    padding: 0px 10% 10px;
+    color:white;
+}
+.title {
+    font-size: 42px;
+}
+.message{
+    font-size:22px;
+    padding-top:30px;
+}
+.footer{
+    /* background-color: #212f39; */
+    display: flex;
+    flex-direction: column ;
+    margin-top: auto;
+    padding: 30px 10% 10%;
+    background: linear-gradient(180deg, #27353c, #1b2930);
+}
+.notify{
+    font-weight: 500;
+}
+.notify-option{
+    display: grid;
+    grid-template-columns: auto auto;
+    width: fit-content;
+    padding: 5px;
+    gap: 0 10px;
+}
+.buttons{
+    display: flex;
+    gap:10px;
+    padding-top: 30px;
+}
+.draft{
+    padding:10px 20px;
+    border-radius: 30px;
+    background-color: #6fc082;
+    font-size: 14px;
+}
+.save{
+    padding:10px 20px;
+    border-radius: 30px;
+    background-color: rgba(0,0,0,0);
+    font-size: 14px;
+    border:1px solid #6fc082;
+    color: #6fc082;
 }
 </style>

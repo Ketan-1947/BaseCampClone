@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import{useRouter} from 'vue-router'
-import { onMounted, useAttrs } from 'vue'
+import navBar from './components/header.vue'
 
 const router = useRouter()
 
-router.beforeEach((to, from, next) => {
-    if (to.path !== '/login' && !localStorage.user_id) {
-        next('/login')
-    } else {
-        next()
-    }
-    // console.log(userData.user_id)
-})
+// router.beforeEach((to, from, next) => {
+//     if(to.path === '/signup'){
+//         console.log(2)
+//         next()
+//     }
+//     else if (to.path !== '/login' && !localStorage.user_id) {
+//         next('/login')
+//     }
+//     else {
+//         next()
+//     }
+// })
 </script>
 
 <template>
-    <RouterView />
+        <RouterView />
 </template>
 
 <style>
@@ -24,40 +28,6 @@ body {
     color: white;
     box-sizing: border-box;
     margin: 0;
-
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    background-color: rgb(11, 21, 27, 0.7);
-    position: fixed;
-    width: 99%;
-}
-
-.navigation-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-}
-
-.nav-text {
-    display: flex;
-    color: white;
-    align-items: center;
-    gap: 5px;
-    text-decoration: none;
-}
-
-.nav-icon {
-    height: 20px;
-}
-
-.user-logo {
-    border-radius: 100%;
-    width: fit-content;
-    padding: 10px;
-    background-color: orange;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 </style>

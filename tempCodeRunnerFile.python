@@ -1,0 +1,1 @@
+print(len('''💡 Pitch by Josh Fiske • Mar 15 — Hey Annie, This isn’t super-important, but we did talk about it when we discussed switching over to a podcast format. It could be worth it'''))
