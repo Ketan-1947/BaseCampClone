@@ -8,7 +8,7 @@ const router = useRouter()
 const metaData = reactive({
     user: localStorage.user_id,
     title: "",
-    category: "",
+    category: "none",
     message: "",
     notify:""
 })

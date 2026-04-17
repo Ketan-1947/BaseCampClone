@@ -62,9 +62,9 @@ function trim(message) {
             </span>
         </div>
         <div class="messages">
-            <div class="message" v-for="(message, id) in messages">
+            <div class="message" v-for="(message) in messages">
                 <img class="user" src="C:\Ketan\intern\dev\vue-project\src\assets\pfp.png" alt="pfp">
-                <div class="message-body" @click="() => { openMessage(id) }">
+                <div class="message-body" @click="() => { openMessage(message.m_id) }">
                     <h3 class="message-title">{{ message.title }}</h3>
                     <p class="message-text">
                         <span class="meta-text">

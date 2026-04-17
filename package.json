@@ -10,13 +10,15 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "start": "node server.js",
-    "start demon": "nodemon server.js"
+    "demon": "nodemon server.js"
   },
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.1.1",
+    "mongoose": "^9.4.1",
     "pinia": "^3.0.4",
     "uuid": "^13.0.0",
     "vue": "^3.5.29",

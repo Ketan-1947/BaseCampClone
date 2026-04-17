@@ -4,18 +4,18 @@ import navBar from './components/header.vue'
 
 const router = useRouter()
 
-// router.beforeEach((to, from, next) => {
-//     if(to.path === '/signup'){
-//         console.log(2)
-//         next()
-//     }
-//     else if (to.path !== '/login' && !localStorage.user_id) {
-//         next('/login')
-//     }
-//     else {
-//         next()
-//     }
-// })
+router.beforeEach((to, from, next) => {
+    if(to.path === '/signup'){
+        console.log(2)
+        next()
+    }
+    else if (to.path !== '/login' && !localStorage.user_id) {
+        next('/login')
+    }
+    else {
+        next()
+    }
+})
 </script>
 
 <template>

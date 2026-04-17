@@ -7,8 +7,9 @@
     type user = Record<string, string>
 
     const user: user = reactive({
+        name:"",
         id:"",
-        pass:""
+        password:""
     })
 
     async function createUser(){
@@ -38,16 +39,20 @@
         <img src="..\assets\logo.svg" alt="logo" class="logo">
         <form @submit.prevent='createUser' class='login'>
             <h3 class="login-title">Sign up to BaseCamp</h3>
-
+            <span class="input-field">
+                <label for="name">Name</label>
+                <input type="text" class="text-field" id="name" name="name" placeholder="Enter Name"
+                    v-model="user.name">
+            </span>
             <span class="input-field">
                 <label for="userName">User Name</label>
                 <input type="text" class="text-field" id="userName" name="userName" placeholder="User Name"
                     v-model="user.id">
             </span>
             <span class="input-field">
-                <label for="pass">Password</label>
-                <input type="password" class="text-field" id="pass" name="password" placeholder="Enter Password"
-                    v-model="user.pass">
+                <label for="password">Password</label>
+                <input type="password" class="text-field" id="password" name="password" placeholder="Enter Password"
+                    v-model="user.password">
             </span>
 
             <button>submit</button>

@@ -8,7 +8,7 @@ console.log(2)
 
 const user = reactive({
     id: "",
-    pass: ""
+    password: ""
 })
 
 async function verifyUser() {
@@ -45,7 +45,7 @@ async function verifyUser() {
             <span class="input-field">
                 <label for="pass">Password</label>
                 <input type="password" class="text-field" id="pass" name="password" placeholder="Enter Password"
-                    v-model="user.pass">
+                    v-model="user.password">
             </span>
 
             <button>submit</button>

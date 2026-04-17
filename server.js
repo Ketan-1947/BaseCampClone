@@ -1,7 +1,8 @@
 import express from 'express'
 import cors from 'cors'
-import fs from 'fs/promises'
-import { addUser, verifyUser, createMessage, createComment, deleteCommnet, deleteMessage } from './server_methods/fs.js'
+import {registerUser, checkUser} from './route_methods/userMethods.js'
+import {deRegisterMessage, registerMessage, returnAllMessage, returnMessageBody} from './route_methods/messageMethods.js'
+import {deRegisterCommnet, registerComment} from './route_methods/commentsMethods.js'
 
 const app = express()
 app.use(cors({
@@ -9,49 +10,20 @@ app.use(cors({
 }))
 app.use(express.json())
 
-app.post('/register', async (req, res) => {
-    let isRegistered = await addUser(req.body)
-    res.status(isRegistered).send()
-})
+app.post('/register', registerUser)
 
-app.post('/verify', async (req, res) => {
-    let isVerified = await verifyUser(req.body)
-    res.status(isVerified).send()
-})
+app.post('/verify', checkUser)
 
-app.post('/message/create', async (req, res) => {
-    let isCreated = await createMessage(req.body);
-    res.status(isCreated.status).json(isCreated.id)
-})
+app.post('/message/create', registerMessage)
 
-app.get('/messages', async (req, res) => {
-    let messages = await fs.readFile('data/messages.json', 'utf-8')
-    res.status(200).json(JSON.parse(messages))
-})
+app.get('/messages', returnAllMessage)
 
-app.get('/message/:id', async (req, res) => {
-    let data = {}
-    let messages = await fs.readFile('data/messages.json', 'utf-8')
-    data["message"] = JSON.parse(messages)[req.params.id]
+app.get('/message/:id', returnMessageBody)
 
-    let comments = await fs.readFile('data/comments.json', 'utf-8')
-    data['comments'] = JSON.parse(comments)[req.params.id]
+app.post('/comment/create/:id', registerComment)
 
-    res.status(200).json(data)
-})
+app.delete('/comment/delete/:id', deRegisterCommnet)
 
-app.post('/comment/create/:id', async (req, res) => {
-    let isCreated = await createComment(req.body, req.params.id);
-    res.status(isCreated).send()
-})
-
-app.delete('/comment/delete/:mid/:cid', async (req, res) => {
-    let isDeleted = await deleteCommnet(req.params.mid, req.params.cid)
-    res.status(isDeleted).send()
-})
-app.delete('/message/delete/:mid', async (req, res) => {
-    let isDeleted = await deleteMessage(req.params.mid)
-    res.status(isDeleted).send()
-})
+app.delete('/message/delete/:id', deRegisterMessage)
 
 app.listen(3000)

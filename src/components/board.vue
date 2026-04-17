@@ -3,7 +3,6 @@
 </script>
 
 <template>
-    <navBar />
     <main class="main">
         <div class="bg-board">
             <p class="sample">Sample</p>

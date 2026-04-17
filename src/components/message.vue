@@ -42,6 +42,7 @@ async function addComment() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(new_comment)
     })
+    console.log(res)
     if (res.status == 200) {
         alert('comment added')
         load_comments()
@@ -50,8 +51,8 @@ async function addComment() {
     else alert("fuckkkkk")
 }
 
-async function deleteComment(m_id, c_id) {
-    let res = await fetch("http://localhost:3000/comment/delete/" + m_id + "/" + c_id, {
+async function deleteComment(c_id) {
+    let res = await fetch("http://localhost:3000/comment/delete/" + c_id, {
         method: "delete"
     })
     if (res.status != 200) {
@@ -106,7 +107,7 @@ async function deleteMessage(m_id) {
         </div>
 
         <div class="comments">
-            <div class="comment-box" v-for="(comment, id) in comments">
+            <div class="comment-box" v-for="(comment) in comments">
                 <div class="comment-meta">
                     <p class="comment-time">{{ comment.time }}</p>
                     <img src="C:\Ketan\intern\dev\vue-project\src\assets\pfp.png" alt="pfp" class="comment-user">
@@ -116,7 +117,7 @@ async function deleteMessage(m_id) {
                         <div class="comment-user-name">{{ comment.user }}</div>
                         <div class="comments-options">
                             <svg class="comments-dots" enable-background="new 0 0 18 6" viewBox="0 0 18 6"
-                                @click.prevent.stop="() => { deleteComment(message_id, id) }"
+                                @click.prevent.stop="() => { deleteComment(comment._id) }"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g fill="#ece9e6">
                                     <circle cx="3" cy="3" r="2" />

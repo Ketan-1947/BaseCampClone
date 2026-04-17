@@ -1,0 +1,66 @@
+import mongoose from "mongoose";
+import USER from "../data_models/user.model.js"
+import MESSAGE from "../data_models/message.model.js"
+import COMMENT from "../data_models/comments.model.js"
+
+mongoose.connect("mongodb+srv://ketan_compro:zp17dmtijm@cluster-learning.8iazmy7.mongodb.net/?appName=Cluster-learning")
+
+async function insertUser(user) {
+    try {
+        const userDOC = new USER(user)
+        await userDOC.save()
+        return {
+            status: true,
+            code: 200
+        }
+    }
+    catch (e) {
+        console.log(e)
+        return {
+            status: false,
+            code: 500,
+            error: "internal server error!"
+        }
+    }
+}
+
+
+async function insertMessage(message) {
+    try {
+        const messageDOC = new MESSAGE(message)
+        await messageDOC.save()
+        return {
+            status: true,
+            code: 200,
+            id: messageDOC._id
+        }
+    }
+    catch (e) {
+        console.log(e)
+        return {
+            status: false,
+            code: 500,
+            error: "internal server error!"
+        }
+    }
+}
+
+async function insertComment(comment) {
+    try {
+        const commentDOC = new COMMENT(comment)
+        await commentDOC.save()
+        return {
+            status: true,
+            code: 200,
+        }
+    }
+    catch (e) {
+        console.log(e)
+        return {
+            status: false,
+            code: 500,
+            error: "internal server error!"
+        }
+    }
+}
+export { insertUser, insertMessage, insertComment }
