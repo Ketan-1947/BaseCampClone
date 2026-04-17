@@ -3,6 +3,9 @@ import cors from 'cors'
 import {registerUser, checkUser} from './route_methods/userMethods.js'
 import {deRegisterMessage, registerMessage, returnAllMessage, returnMessageBody} from './route_methods/messageMethods.js'
 import {deRegisterCommnet, registerComment} from './route_methods/commentsMethods.js'
+import mongoose from 'mongoose'
+
+mongoose.connect("mongodb+srv://ketan_compro:zp17dmtijm@cluster-learning.8iazmy7.mongodb.net/?appName=Cluster-learning")
 
 const app = express()
 app.use(cors({
