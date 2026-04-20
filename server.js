@@ -5,7 +5,7 @@ import {deRegisterMessage, registerMessage, returnAllMessage, returnMessageBody}
 import {deRegisterCommnet, registerComment} from './route_methods/commentsMethods.js'
 import mongoose from 'mongoose'
 
-mongoose.connect("mongodb+srv://ketan_compro:zp17dmtijm@cluster-learning.8iazmy7.mongodb.net/?appName=Cluster-learning")
+mongoose.connect("connection string here")
 
 const app = express()
 app.use(cors({

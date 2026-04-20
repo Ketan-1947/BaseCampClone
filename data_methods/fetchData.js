@@ -2,7 +2,6 @@ import USER from "../data_models/user.model.js"
 import MESSAGE from "../data_models/message.model.js"
 import COMMENT from "../data_models/comments.model.js"
 
-// mongoose.connect("mongodb+srv://ketan_compro:zp17dmtijm@cluster-learning.8iazmy7.mongodb.net/?appName=Cluster-learning")
 
 async function fetchUser(uid) {
     try {
