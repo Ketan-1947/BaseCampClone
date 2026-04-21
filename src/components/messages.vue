@@ -63,7 +63,7 @@ function trim(message) {
         </div>
         <div class="messages">
             <div class="message" v-for="(message) in messages">
-                <img class="user" src="C:\Ketan\intern\dev\vue-project\src\assets\pfp.png" alt="pfp">
+                <img class="user" src="..\assets\pfp.png" alt="pfp">
                 <div class="message-body" @click="() => { openMessage(message.m_id) }">
                     <h3 class="message-title">{{ message.title }}</h3>
                     <p class="message-text">

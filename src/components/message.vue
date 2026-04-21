@@ -86,7 +86,7 @@ async function deleteMessage(m_id) {
                 <h1 class="title">{{ message.title }}</h1>
                 <div class="line"></div>
                 <div class="meta-info">
-                    <img src="C:\Ketan\intern\dev\vue-project\src\assets\pfp.png" alt="pfp" class="user">
+                    <img src="..\assets\pfp.png" alt="pfp" class="user">
                     <p class="time">{{ message.time }}</p>
                 </div>
             </div>
@@ -110,7 +110,7 @@ async function deleteMessage(m_id) {
             <div class="comment-box" v-for="(comment) in comments">
                 <div class="comment-meta">
                     <p class="comment-time">{{ comment.time }}</p>
-                    <img src="C:\Ketan\intern\dev\vue-project\src\assets\pfp.png" alt="pfp" class="comment-user">
+                    <img src="..\assets\pfp.png" alt="pfp" class="comment-user">
                 </div>
                 <div class="comment-content">
                     <div class="content-top">
@@ -136,13 +136,13 @@ async function deleteMessage(m_id) {
 
         <div class="write-comment-box" v-if="!write_comment">
             <div class="comment-filler"></div>
-            <img src="C:\Ketan\intern\dev\vue-project\src\assets\pfp.png" alt="pfp" class="comment-user">
+            <img src="..\assets\pfp.png" alt="pfp" class="comment-user">
             <p @click.prevent.stop="write_comment = true" class='add-comment'>Add a comment here...</p>
         </div>
 
         <div class="write-comment-box" v-else>
             <div class="comment-filler"></div>
-            <img src="C:\Ketan\intern\dev\vue-project\src\assets\pfp.png" alt="pfp"
+            <img src="..\assets\pfp.png" alt="pfp"
                 class="comment-user add-comment-user">
             <div class="editor">
                 <div class="toolbar">

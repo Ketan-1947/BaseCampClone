@@ -1,6 +1,6 @@
-import { fetchAllComments } from '../data_methods/fetchData.js'
-import { insertComment } from '../data_methods/addData.js'
-import { removeComment } from '../data_methods/deleteData.js'
+import { fetchAllComments } from '../utils/fetchData.js'
+import { insertComment } from '../utils/addData.js'
+import { removeComment } from '../utils/deleteData.js'
 
 async function getAllComments(m_id) {
     const comments = await fetchAllComments(m_id);

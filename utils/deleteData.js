@@ -1,5 +1,5 @@
-import COMMENTS from "../data_models/comments.model.js";
-import MESSAGE from "../data_models/message.model.js"
+import COMMENTS from "../models/comments.model.js";
+import MESSAGE from "../models/message.model.js"
 async function removeComment(id) {
     try {
         await COMMENTS.deleteOne({ _id: id })

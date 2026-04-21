@@ -1,6 +1,6 @@
-import USER from "../data_models/user.model.js"
-import MESSAGE from "../data_models/message.model.js"
-import COMMENT from "../data_models/comments.model.js"
+import USER from "../models/user.model.js"
+import MESSAGE from "../models/message.model.js"
+import COMMENT from "../models/comments.model.js"
 
 
 async function fetchUser(uid) {

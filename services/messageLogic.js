@@ -1,8 +1,8 @@
 import { createId } from './createId.js'
-import { insertMessage } from '../data_methods/addData.js'
-import { fetchAllMessage, fetchMessageById } from '../data_methods/fetchData.js'
+import { insertMessage } from '../utils/addData.js'
+import { fetchAllMessage, fetchMessageById } from '../utils/fetchData.js'
 import { getAllComments } from './commentsLogic.js'
-import { removeMessage } from '../data_methods/deleteData.js'
+import { removeMessage } from '../utils/deleteData.js'
 
 async function createMessage(message) {
     message.m_id = createId()

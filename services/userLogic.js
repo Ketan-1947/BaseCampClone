@@ -1,5 +1,5 @@
-import {fetchUser} from '../data_methods/fetchData.js'
-import {insertUser, insertMessage} from '../data_methods/addData.js'
+import {fetchUser} from '../utils/fetchData.js'
+import {insertUser, insertMessage} from '../utils/addData.js'
 
 async function verifyUser(user) {
     console.log(user)

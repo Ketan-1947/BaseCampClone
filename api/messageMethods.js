@@ -1,5 +1,5 @@
 
-import { createMessage, getAllMessage, getMessageBody,  deleteMessage} from "../business_logic/messageLogic.js";
+import { createMessage, getAllMessage, getMessageBody,  deleteMessage} from "../services/messageLogic.js";
 
 async function registerMessage(req, res) {
     const message = req.body

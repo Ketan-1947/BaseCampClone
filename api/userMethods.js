@@ -1,4 +1,4 @@
-import { createUser, verifyUser } from "../business_logic/userLogic.js"
+import { createUser, verifyUser } from "../services/userLogic.js"
 
 async function registerUser(req, res) {
     try {

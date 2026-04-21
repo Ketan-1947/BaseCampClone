@@ -1,4 +1,4 @@
-import {createComment, deleteComment} from "../business_logic/commentsLogic.js"
+import {createComment, deleteComment} from "../services/commentsLogic.js"
 
 async function registerComment(req, res){
     const comment = req.body
