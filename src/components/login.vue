@@ -12,6 +12,7 @@ const user = reactive({
 })
 
 async function verifyUser() {
+    user.id = user.id.toLowerCase()
     let verified = await fetch('http://localhost:3000/verify', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },

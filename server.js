@@ -4,8 +4,11 @@ import {registerUser, checkUser} from './api/userMethods.js'
 import {deRegisterMessage, registerMessage, returnAllMessage, returnMessageBody} from './api/messageMethods.js'
 import {deRegisterCommnet, registerComment} from './api/commentsMethods.js'
 import mongoose from 'mongoose'
+import 'dotenv/config'
 
-mongoose.connect("mongodb+srv://ketan_compro:zp17dmtijm@cluster-learning.8iazmy7.mongodb.net/?appName=Cluster-learning")
+const mongoUrl = process.env.MONGODB_URL
+
+mongoose.connect(mongoUrl)
 
 const app = express()
 app.use(cors({
